@@ -1,0 +1,66 @@
+{% import "macros.html" as macros %}
+<div>
+    {% for post in posts %}
+    <div class="panel panel-primary" style="box-shadow: 10px 10px 5px #888888;">
+        <div class="panel-heading">
+            标题：
+            <a class="colortitle" href="{{ url_for('post.postpage', id=post.Posts.id ) }}">{{ post.Posts.title}}</a>
+            </br>
+            作者：
+            <a class="colortitle" href="{{ url_for('user.info', username=post.Users.username ) }}">{{ post.Users.nickname }}</a>
+        </div>
+        <div class="panel-body">{{ post.Posts.content_html | safe }}
+            <br>
+        </div>
+        <div class="panel-footer">
+            {{ moment(post.Posts.created_at).fromNow() }}
+            <div id="qq" style="float:right"></div>
+            </br>
+            <form action="" method="post" class="form" role="form">
+                {{ form.hidden_tag() }}
+                <div class="form-group required">
+                    <div class="row">
+                        <div class="col-md-11">
+                            {{ form.follow(class="form-control", placeholder="评论")}}
+                        </div>
+                        <div class="col-md-1">
+                            {{ form.sub(class="btn btn-default form-control", value="评论") }}
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="row">
+                <div class="col-md-10">
+                    <a href="{{ url_for('post.like', page=page) }}">
+                    <button class="btn btn-success" type="button">
+                        喜欢
+                        <span class="badge">{{post.Posts.good_num}}</span>
+                    </button>
+                    </a>
+                    <a href="{{ url_for('post.dislike', page=page) }}">
+                    <button class="btn btn-warning" type="button">
+                        不喜欢
+                        <span class="badge">{{post.Posts.bad_num}}</span>
+                    </button>
+                    </a>
+                </div>
+                <div class="col-md-2">
+                    <a href="{{ url_for('post.collect', page=page) }}">
+                    <button class="btn btn-primary pull-right" type="button">
+                        收藏
+                        <span class="badge">{{post.Posts.follow_num}}</span>
+                    </button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+    {% include 'follow.html' %}
+    {% if pagination %}
+    <div class='pagination'>
+        {{ macros.pagination_widget(pagination, '.postpage', id= posts[0].Posts.id)}}
+    </div>
+    {% endif %}
+</div>

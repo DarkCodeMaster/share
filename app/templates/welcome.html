@@ -1,0 +1,88 @@
+{% extends "bootstrap/base.html" %} 
+{% block title %}Share{% endblock %}
+
+{% block content %}
+<div id="myCarousel" class="carousel slide" style="height:550px">
+    <!-- 轮播（Carousel）指标 -->
+    <ol class="carousel-indicators">
+        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#myCarousel" data-slide-to="1"></li>
+        <li data-target="#myCarousel" data-slide-to="2"></li>
+    </ol>
+    <!-- 轮播（Carousel）项目 -->
+    <div class="carousel-inner">
+        <div class="item active">
+            <a href="{{url_for('main.index')}}"><img src="/static/pictures/1.jpg" alt="First slide" style="height:550px; width:100%"></a>
+            <div class="carousel-caption">
+                <h1>书写</h1>
+                <p>书写灵感，放飞自我。</br>markdown文法让书写更随心所欲。</p>
+            </div>
+        </div>
+        <div class="item">
+            <a href="{{url_for('main.index')}}"><img src="/static/pictures/2.jpg" alt="Second slide" style="height:550px; width:100%"></a>
+            <div class="carousel-caption">
+                <h1>阅读</h1>
+                <p>书中自有颜如玉，书中自有黄金屋。</br>用别人的灵感武装自己的灵魂。</p>
+            </div>
+        </div>
+        <div class="item">
+            <a href="{{url_for('main.index')}}"><img src="/static/pictures/3.jpg" alt="Third slide" style="height:550px; width:100%"></a>
+            <div class="carousel-caption">
+                <h1>统计</h1>
+                <p>运筹帷幄之中，决胜千里之外。</br>洞察网站的状态竟如此容易。</p>
+            </div>
+        </div>
+    </div>
+    <!-- 轮播（Carousel）导航 -->
+    <a class="carousel-control left" href="#myCarousel" data-slide="prev"></a>
+    <a class="carousel-control right" href="#myCarousel" data-slide="next"></a>
+</div>
+
+<div class="row">
+    <div class="col-sm-6 col-md-4">
+        <div class="thumbnail">
+            <div class="caption">
+                <h3>书写</h3>
+            </div>
+            <a href="{{url_for('main.index')}}" class="thumbnail">
+                <img src="/static/pictures/pic3.png" alt="...">
+            </a>
+        </div>
+    </div>
+    <div class="col-sm-6 col-md-4">
+        <div class="thumbnail">
+            <div class="caption">
+                <h3>阅读</h3>
+            </div>
+            <a href="{{url_for('main.index')}}" class="thumbnail">
+                <img src="/static/pictures/pic2.png" alt="...">
+            </a>
+        </div>
+    </div>
+    <div class="col-sm-6 col-md-4">
+        <div class="thumbnail">
+            <div class="caption">
+                <h3>统计</h3>
+            </div>
+            <a href="{{url_for('main.index')}}" class="thumbnail">
+                <img src="/static/pictures/pic1.png" alt="...">
+            </a>
+        </div>
+    </div>
+</div>
+
+<footer class="bs-docs-footer" style="height:300px; width:100%; background-color:#2a2730">
+    <div class="container">
+        <p style="margin-top:200px; color:#99979c">Designed and built by
+            <a href="{{ url_for('user.info', username='Weaker') }}" style="color:#ffffff">@Weaker</a>
+        </p>
+    </div>
+</footer>
+{% endblock %}
+
+{% block scripts %}
+<link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+{% endblock %}
+

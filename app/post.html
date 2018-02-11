@@ -1,0 +1,14 @@
+<div>
+    {% for post in posts %}
+    <li class="post">
+            <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">{{ post.title }}</h3>
+                    </div>
+                <div class="panel-footer">{{ post.content_html }}<br>
+                    {{ moment(post.created_at).fromNow() }}<br>
+                </div>
+            </div>
+    </li>
+    {% endfor %}
+</div>

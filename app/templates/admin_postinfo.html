@@ -1,0 +1,39 @@
+{% extends "admin_base.html" %} 
+{% block page_content %}
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>文章编号</th>
+            <th>文章标题</th>
+            <th>所属板块</th>
+            <th>创建时间</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for row in data %}
+    <tr>
+        <td>{{ row.id }}</td>
+        <td>{{ row.title }}</td>
+        {% if row.board_id == 1 %}
+        <td>出行</td>
+        {% elif row.board_id ==2 %}
+        <td>美食</td>
+        {% elif row.board_id ==3 %}
+        <td>趣闻</td>
+        {% else %}
+        <td>奇珍</td>
+        {% endif %}
+        <td>{{moment(row.created_at).format('L')}}</td>
+        <td><a href="{{ url_for('main.delete_post', id=row.id) }}" class="btn btn-warn btn-sm btn-delete-post"><button type="button" class="btn btn-danger">删除</button></a></td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+{{ moment.include_moment() }}
+{{ moment.lang("zh-CN")}}
+{{ pagedown.include_pagedown() }}
+{% endblock %}

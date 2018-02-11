@@ -1,0 +1,157 @@
+{% extends "bootstrap/base.html" %} 
+{% block title %}Share{% endblock %} 
+{% block navbar %}
+<div class="navbar navbar-default" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{{ url_for('main.index') }}">
+                <p class="text-primary">Share</p>
+            </a>
+        </div>
+
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a href="{{ url_for('main.admin_data') }}">数据统计</a>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">信息管理
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="{{ url_for('main.admin_userinfo') }}">用户信息</a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('main.admin_postinfo') }}">文章信息</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %} 
+
+{% block content %}
+<div class="container">
+        {% for msg in get_flashed_messages() %}
+        <div class="alert alert-success" role="alert">{{msg}}</div>
+        {% endfor %}
+</div>
+
+<<div class="container">
+{% block page_content %} 
+
+<script src="https://cdn.bootcss.com/echarts/3.8.5/echarts.min.js"></script>
+<div class="row">
+    <div id="main" class="col-md-6" style="height:700px"></div>
+    <div id="sub" class="col-md-6" style="height:700px"></div>
+</div>
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+var myChart = echarts.init(document.getElementById('main'));
+var option = {
+    title : {
+        text: '各话题文章数量',
+        subtext: '',
+        x:'center'
+    },
+    tooltip : {
+        trigger: 'item',
+        formatter: "{a} <br/>{b} : {c} ({d}%)"
+    },
+    legend: {
+        orient: 'vertical',
+        left: 'left',
+        data: ['出行','美食','趣闻','奇珍']
+    },
+    series : [
+        {
+            name: '所属话题',
+            type: 'pie',
+            radius : '55%',
+            center: ['50%', '60%'],
+            selectedMode: 'single',
+            data:[
+                {value:{{values[0]}}, name:'出行'},
+                {value:{{values[1]}}, name:'美食'},
+                {value:{{values[2]}}, name:'趣闻'},
+                {value:{{values[3]}}, name:'奇珍'}
+            ],
+            itemStyle: {
+                emphasis: {
+                    shadowBlur: 10,
+                    shadowOffsetX: 0,
+                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                }
+            }
+        }
+    ]
+};
+myChart.setOption(option);
+</script>
+
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+var myChart = echarts.init(document.getElementById('sub'));
+option = {
+    color: ['#3398DB'],
+    title : {
+        text: '已认证用户与未认证用户',
+        subtext: '',
+        x:'center'
+    },
+    tooltip : {
+        trigger: 'axis',
+        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        }
+    },
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+    xAxis : [
+        {
+            type : 'category',
+            data : ['已认证', '未认证'],
+            axisTick: {
+                alignWithLabel: true
+            }
+        }
+    ],
+    yAxis : [
+        {
+            type : 'value'
+        }
+    ],
+    series : [
+        {
+            name:'用户数量',
+            type:'bar',
+            barWidth: '60%',
+            data:[{{user_values[0]}}, {{user_values[1]}}]
+        }
+    ]
+};
+myChart.setOption(option);
+</script>
+
+{% endblock %}
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+{{ moment.include_moment() }}
+{{ moment.lang("zh-CN")}}
+{% endblock %}

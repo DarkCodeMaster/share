@@ -1,0 +1,13 @@
+您好 {{ u.username }},
+
+欢迎访问Share！
+
+通过点击链接来确认您的账户:
+
+{{ url_for('user.confirm', token=token, _external=True) }}
+
+诚挚的,
+
+Share团队
+
+注意：回复本邮件无效

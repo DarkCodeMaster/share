@@ -1,0 +1,32 @@
+{% extends "admin_base.html" %} 
+{% block page_content %}
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>用户编号</th>
+            <th>电子邮件</th>
+            <th>用户名称</th>
+            <th>用户昵称</th>
+            <th>注册时间</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for row in data %}
+    {% if row.isdeleted == False %}
+    <tr>
+        <td>{{ row.id }}</td>
+        <td>{{ row.email }}</td>
+        <td>{{ row.username }}</td>
+        <td>{{ row.nickname }}</td>
+        <td>{{moment(row.member_since).format('L')}}</td>
+        <td><a href="{{ url_for('main.delete_user', id=row.id) }}" class="btn btn-warn btn-sm btn-delete-post"><button type="button" class="btn btn-danger">删除</button></a></td>
+    {% endif %}
+    {% endfor %}
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+{{ moment.include_moment() }}
+{{ moment.lang("zh-CN")}}
+{{ pagedown.include_pagedown() }}
+{% endblock %}

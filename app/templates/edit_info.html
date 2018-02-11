@@ -1,0 +1,12 @@
+{% extends "app_base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block page_content %} 
+<div class="page-header">
+        <h1>编辑个人资料</h1>
+</div>
+<div class="col-md-6">
+        {{ wtf.quick_form(form) }}
+</div>
+<div class="col-md-3"></div>
+{% endblock %}

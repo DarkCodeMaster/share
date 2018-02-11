@@ -1,0 +1,8 @@
+<div class="list-group" style="box-shadow: 10px 10px 5px #888888;">
+    {% for follow in follows %}
+    <a class="list-group-item" href="{{ url_for('user.info', username=follow.Users.username ) }}">
+        <h4 class="text-primary">{{ follow.Users.username }}</h4>
+        <p>{{ follow.Follows.content }}</p>
+    </a>
+    {% endfor %}
+</div>

@@ -1,0 +1,26 @@
+{% extends "app_base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% import "macros.html" as macros %}
+
+{% block page_content %} 
+<div class="page-header">
+<h1>您好，
+{% if current_user.is_authenticated %}
+    {{ current_user.username }}
+{% else %}
+    陌生人
+{% endif %}
+</h1>
+</div>
+{% include 'post.html' %}
+{% if pagination %}
+<div class="pagination">
+    {{ macros.pagination_widget(pagination, '.index') }}
+</div>
+{% endif %}
+{% endblock %}
+
+{% block styles %} 
+{{ super() }}
+<link rel="stylesheet" href="{{url_for('static', filename='title.css') }}"> 
+{% endblock %}

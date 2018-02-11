@@ -1,0 +1,60 @@
+{% extends "app_base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block page_content %}
+
+{% if u.isdeleted == False%} 
+<div class="page-header">
+        <h1>{{u.username}}</h1>
+</div>
+<div class="alert alert-success" role="alert">昵称：{{u.nickname}}</div>
+<div class="alert alert-info" role="alert">电子邮件：{{u.email}}</div>        
+<div class="alert alert-warning" role="alert">个人签名：{{u.about_me}}</div>
+<div class="alert alert-success" role="alert">注册于：{{moment(u.member_since).format('L')}}</div>
+<div class="alert alert-warning" role="alert">上次登录：{{moment(u.last_seen).fromNow()}}</div>
+<div class="alert alert-success" role="alert">粉丝数：{{u.follow_num}}</div>
+        {% if u.id == current_user.id %}
+        <a href="{{ url_for('user.edit_info') }}">
+                <button type="button" class="btn btn-default btn-lg">
+                        <span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span> 编辑
+                </button>
+        </a>
+        <div style="margin-bottom:50px" class="row">
+                <div class="col-md-6">
+                        <h2>我的关注:</h2>
+                        {% for row in follow %}
+                        <a href="{{ url_for('user.info', username=row.Users.username) }}">
+                        <button style="margin:1px" type="button" class="btn btn-warning">{{ row.Users.username }}</button>
+                        </a></br>
+                        {% endfor %}
+                </div>
+                <div class="col-md-6">
+                        <h2>我的收藏:</h2>
+                        {% for row in collect %}
+                        <a href="{{ url_for('post.postpage', id=row.Posts.id) }}">
+                        <button style="margin:1px" type="button" class="btn btn-info">{{ row.Posts.title }}</button>
+                        </a></br>
+                        {% endfor %}
+                </div>
+        </div>
+        {% else %}
+                {% if isFollowed == False %}
+                <a href="{{ url_for('user.follow', id=u.id) }}">
+                        <button type="button" class="btn btn-default btn-lg">
+                                <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span> 关注
+                        </button>
+                </a>
+                {% else %}
+                <a href="{{ url_for('user.follow', id=u.id) }}">
+                        <button type="button" class="btn btn-default btn-lg">
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span> 已关注
+                        </button>
+                </a>
+                {% endif %}
+        {% endif %}
+{% else %}
+<div class="page-header">
+        <h1>用户已注销</h1>
+</div>
+{% endif %}
+{% endblock %}

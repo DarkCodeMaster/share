@@ -1,0 +1,28 @@
+<div>
+    {% for post in posts %}
+            <div class="panel panel-primary" style="box-shadow: 10px 10px 5px #888888;">
+                    <div class="panel-heading">
+                        标题：<a class = "colortitle" href="{{ url_for('post.postpage', id=post.Posts.id ) }}">{{ post.Posts.title}}</a></br>
+                        作者：<a class="colortitle" href="{{ url_for('user.info', username=post.Users.username ) }}">{{ post.Users.nickname }}</a>
+                    </div>
+                <div class="panel-body">{{ post.Posts.content_html | safe  }}<br></div>
+                <div class="panel-footer">
+                    {{ moment(post.Posts.created_at).fromNow() }}
+                    <div class="pull-right">
+                        <a style="color:#000000; margin-right:10px" href=" {{ url_for('post.postpage', id=post.Posts.id ) }} ">赞:{{ post.Posts.good_num }}</a>
+                        <a style="color:#000000" href=" {{ url_for('post.postpage', id=post.Posts.id ) }} ">收藏:{{ post.Posts.follow_num }}</a>
+                    </div>
+                </div>
+            </div>
+            {% if current_user.role == 1 %}
+            <div class="progress">
+                <div class="progress-bar progress-bar-success" style="width: {{post.Posts.positive}}%">
+                    积极：{{post.Posts.positive}}%
+                </div>
+                <div class="progress-bar progress-bar-danger" style="width: {{100-post.Posts.positive}}%">
+                    消极：{{100-post.Posts.positive}}%
+                </div>
+            </div>
+            {% endif %}
+    {% endfor %}
+</div>

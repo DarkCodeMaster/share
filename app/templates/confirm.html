@@ -1,0 +1,11 @@
+<div class="page-header">
+        <h1>您好 {{ u.username }}</h1>
+</div>
+<p>欢迎访问 <b>Share</b>!</p>
+<p>通过点击链接来确认您的账户: <a href="{{ url_for('user.confirm', token=token, _external=True) }}">点击这里</a>.</p>
+<p>或者粘贴到浏览器的地址栏中</p>
+<p>{{ url_for('user.confirm', token=token, _external=True) }}</p>
+<p>诚挚的，</p>
+<p>Share团队</p>
+<p><small>注意：回复本邮件无效</small></p>
+
